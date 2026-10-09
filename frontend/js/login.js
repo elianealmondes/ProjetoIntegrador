@@ -3,7 +3,10 @@
    Controle de acesso do sistema
 ====================================== */
 
-const API = "/api/auth";
+const API =
+  typeof window.apiUrl === "function"
+    ? window.apiUrl("/api/auth")
+    : "/api/auth";
 
 // PERFIL ATUAL
 
@@ -112,7 +115,7 @@ formCadastro.addEventListener("submit", async (e) => {
     formCadastro.reset();
     modalCadastro.hide();
   } catch (err) {
-    Swal.fire({ icon: "error", title: "Erro de conexão", text: "Não foi possível conectar ao servidor. Inicie com: npm start" });
+    Swal.fire({ icon: "error", title: "Erro de conexão", text: typeof window.apiErroConexao === "function" ? window.apiErroConexao("auth/cadastro", err) : "Não foi possível conectar ao servidor. Inicie com: npm start" });
   }
 });
 
@@ -205,7 +208,10 @@ formLogin.addEventListener("submit", async (e) => {
     Swal.fire({
       icon: "error",
       title: "Erro de conexão",
-      text: "Não foi possível conectar ao servidor. Inicie com: npm start",
+      text:
+        typeof window.apiErroConexao === "function"
+          ? window.apiErroConexao("auth/login", err)
+          : "Não foi possível conectar ao servidor. Inicie com: npm start",
     });
   }
 });

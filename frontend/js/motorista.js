@@ -589,7 +589,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       await carregarHistorico();
     } catch (err) {
       console.error("[checkin] erro", err);
-      Swal.fire({ icon: "error", title: "Erro no check-in", text: err.message || "Falha ao salvar. Verifique conexão com servidor." });
+      const textoErro =
+        window.API_VIA_ARQUIVO && !window.API_CONFIGURADO
+          ? window.API_DICA_SERVIDOR
+          : err.message ||
+            "Falha ao salvar. Verifique se o servidor está rodando (npm start).";
+      Swal.fire({ icon: "error", title: "Erro no check-in", text: textoErro });
     } finally {
       if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.innerHTML = textoOriginal; }
     }

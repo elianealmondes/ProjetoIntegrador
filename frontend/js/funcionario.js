@@ -580,7 +580,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function carregarUsuarios() {
     const tab = document.getElementById("tabelaUsuarios");
-    const res = await fetch("/api/auth/usuarios").catch(() => null);
+    const res = await fetch(window.apiUrl("/api/auth/usuarios")).catch(() => null);
     let usuarios = res && res.ok ? await res.json() : await SyncDB.buscarTodos("usuarios");
 
     tab.innerHTML = "";
@@ -615,7 +615,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tipo = document.getElementById("novoTipo").value;
       const senha = document.getElementById("novaSenha").value;
 
-      const res = await fetch("/api/auth/cadastro", {
+      const res = await fetch(window.apiUrl("/api/auth/cadastro"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, cpf, tipo, senha }),
