@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DockFlow - Sistema Inteligente de Recebimento</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    />
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="frontend/css/style.css" />
+  </head>
+
+  <body>
+    <!-- Entrada única do sistema; os perfis possuem painéis próprios. -->
+    <script>window.location.replace("login.html");</script>
+    <!-- MENU LATERAL -->
+    <div id="sidebar">
+      <!-- Seu menu ficará aqui -->
+    </div>
+
+    <!-- CONTEÚDO -->
+
+    <div id="content">
+      <!-- NAVBAR -->
+
+      <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+        <div class="container-fluid">
+          <button class="btn btn-primary" id="btnMenu">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <div class="ms-auto d-flex align-items-center gap-4">
+            <div>
+              <i class="bi bi-bell fs-5"></i>
+
+              <span class="badge bg-danger" id="qtdNotificacoes"> 0 </span>
+            </div>
+
+            <div class="dropdown">
+              <a
+                class="text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown"
+                href="#"
+              >
+                <i class="bi bi-person-circle fs-2"></i>
+              </a>
+
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="#"> Meu Perfil </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item" href="#"> Configurações </a>
+                </li>
+
+                <li><hr /></li>
+
+                <li>
+                  <a class="dropdown-item text-danger" id="logout" href="#">
+                    Sair
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- DASHBOARD -->
+
+      <div class="container-fluid mt-4">
+        <h3>Dashboard Geral</h3>
+
+        <div class="row mt-4">
+          <div class="col-lg-3">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <h6>Motoristas na Fila</h6>
+
+                <h2 id="motoristasFila">0</h2>
+
+                <i class="bi bi-truck fs-1 text-primary"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <h6>Docas Ocupadas</h6>
+
+                <h2 id="docasOcupadas">0</h2>
+
+                <i class="bi bi-box-seam fs-1 text-success"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <h6>Recebimentos Hoje</h6>
+
+                <h2 id="recebimentosHoje">0</h2>
+
+                <i class="bi bi-check-circle fs-1 text-warning"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="card shadow border-0">
+              <div class="card-body">
+                <h6>Pendências</h6>
+
+                <h2 id="pendencias">0</h2>
+
+                <i class="bi bi-exclamation-circle fs-1 text-danger"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LINHA DOS GRÁFICOS -->
+
+        <div class="row mt-4">
+          <!-- Recebimentos -->
+          <div class="col-lg-8">
+            <div class="card shadow border-0">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">Recebimentos dos Últimos 7 Dias</h5>
+              </div>
+
+              <div class="card-body">
+                <canvas id="graficoRecebimentos" height="90"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Docas -->
+
+          <div class="col-lg-4">
+            <div class="card shadow border-0">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">Ocupação das Docas</h5>
+              </div>
+
+              <div class="card-body">
+                <canvas id="graficoDocas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILA DE CAMINHÕES -->
+
+        <div class="row mt-4">
+          <div class="col-lg-8">
+            <div class="card shadow border-0">
+              <div class="card-header bg-white d-flex justify-content-between">
+                <h5>Fila de Caminhões</h5>
+
+                <button class="btn btn-primary" id="novoCheckin">
+                  Novo Check-in
+                </button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Senha</th>
+
+                      <th>Motorista</th>
+
+                      <th>Transportadora</th>
+
+                      <th>NF</th>
+
+                      <th>Status</th>
+
+                      <th>Doca</th>
+
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="tabelaFila">
+                    <!-- JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- DOCAS -->
+
+          <div class="col-lg-4">
+            <div class="card shadow border-0">
+              <div class="card-header bg-white">
+                <h5>Situação das Docas</h5>
+              </div>
+
+              <div class="card-body">
+                <div id="listaDocas">
+                  <!-- JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATIVIDADES -->
+
+        <div class="row mt-4">
+          <div class="col-lg-6">
+            <div class="card shadow border-0">
+              <div class="card-header bg-white">
+                <h5>Últimas Movimentações</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group" id="ultimasMovimentacoes"></ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card shadow border-0">
+              <div class="card-header bg-white">
+                <h5>Notificações</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group" id="listaNotificacoes"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ÁREA DINÂMICA -->
+
+        <div class="row mt-5">
+          <div class="col-12">
+            <div id="conteudoSistema">
+              <!--
+Check-in
+
+Auditoria
+
+Relatórios
+
+Motoristas
+
+Funcionários
+
+Produtos
+
+Docas
+
+Configurações
+
+Tudo será carregado aqui via JavaScript.
+-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FECHA CONTENT -->
+    </div>
+
+    <!-- Bootstrap -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript -->
+
+    <!-- O dashboard é carregado pelo painel correspondente ao perfil. -->
+  </body>
+</html>

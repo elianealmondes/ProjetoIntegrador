@@ -1,0 +1,275 @@
+/* =====================================
+   DockFlow - Tela de Login
+   ===================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(1200px 600px at 85% -10%, #2f6bff 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, #1e3a8a 0%, transparent 50%),
+    linear-gradient(150deg, #0b1526 0%, #14233f 50%, #0f1e38 100%);
+}
+
+/* CONTAINER PRINCIPAL */
+
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* CARD LOGIN */
+
+.login-card {
+  width: 440px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 22px;
+  padding: 38px 38px 30px;
+  box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.55);
+  animation: entrada 0.5s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* LOGO */
+
+.logo-area {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.logo-icon {
+  width: 78px;
+  height: 78px;
+  margin: auto;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2f6bff, #1e3a8a);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  box-shadow: 0 16px 30px -10px rgba(47, 107, 255, 0.7);
+}
+
+.logo-area h1 {
+  margin-top: 18px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: -0.5px;
+}
+
+.logo-area h1 span {
+  background: linear-gradient(135deg, #2f6bff, #1e3a8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-area p {
+  color: var(--texto-suave, #64748b);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* ESCOLHA PERFIL */
+
+.perfil-select {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.perfil {
+  flex: 1;
+  padding: 18px 12px 14px;
+  border-radius: 18px;
+  border: 1.5px solid #e3ebf7;
+  background: linear-gradient(160deg, #ffffff 0%, #f4f7fc 100%);
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1.1;
+  position: relative;
+  overflow: hidden;
+}
+
+.perfil::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(47, 107, 255, 0.08), transparent 65%);
+  pointer-events: none;
+}
+
+.perfil:hover {
+  border-color: #2f6bff;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 26px -12px rgba(47, 107, 255, 0.45);
+}
+
+.perfil .perfil-icone {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 10px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eaf1ff, #dbe7ff);
+  color: #2f6bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.perfil.ativo {
+  background: linear-gradient(135deg, #2f6bff, #1e3a8a);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 16px 30px -10px rgba(47, 107, 255, 0.65);
+}
+
+.perfil.ativo .perfil-icone {
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+}
+
+.perfil.ativo::after {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 65%);
+}
+
+/* CAMPOS */
+
+.input-group-text {
+  background: #f1f5fb;
+  color: #2f6bff;
+  border: 1px solid #e6ecf5;
+}
+
+.form-control {
+  height: 50px;
+  border-radius: 12px;
+  border: 1px solid #e6ecf5;
+}
+
+.form-control:focus {
+  border-color: #2f6bff;
+  box-shadow: 0 0 0 0.2rem rgba(47, 107, 255, 0.15);
+}
+
+.input-group > .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* LINK RECUPERAR */
+
+#recuperarSenha {
+  color: #2f6bff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#recuperarSenha:hover {
+  text-decoration: underline;
+}
+
+/* BOTÃO LOGIN */
+
+.btn-login {
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2f6bff, #1e3a8a);
+  border: none;
+  font-size: 17px;
+  font-weight: 700;
+  box-shadow: 0 12px 24px -10px rgba(47, 107, 255, 0.6);
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #3a78ff, #2550b3);
+}
+
+/* BOTÃO CADASTRO */
+
+#abrirCadastro {
+  height: 50px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 2px solid #2f6bff;
+  color: #2f6bff;
+}
+
+#abrirCadastro:hover {
+  background: #eef4ff;
+}
+
+/* FOOTER */
+
+.footer-login {
+  margin-top: 25px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.footer-login span {
+  display: block;
+  font-size: 12px;
+}
+
+/* MODAIS */
+
+.modal-content {
+  border-radius: 18px;
+  border: none;
+}
+
+.modal-header {
+  border-radius: 18px 18px 0 0;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 500px) {
+  .login-card {
+    width: 100%;
+    padding: 28px 22px 24px;
+  }
+  .logo-area h1 {
+    font-size: 32px;
+  }
+  .perfil {
+    padding: 12px;
+  }
+}
